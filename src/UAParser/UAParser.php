@@ -24,10 +24,10 @@
  *   - Pravin Dahal (https://github.com/pravindahal)
  */
 
-namespace Tobie;
+namespace UAParser;
 
 use Symfony\Component\Yaml\Yaml;
-use Tobie\Exception\FileNotFoundException;
+use UAParser\Exception\FileNotFoundException;
 
 require_once dirname(__DIR__) . '/bootstrap.php';
 

@@ -1,4 +1,4 @@
 <?php
-namespace Tobie\Exception;
+namespace UAParser\Exception;
 
 class FileNotFoundException extends \Exception {}

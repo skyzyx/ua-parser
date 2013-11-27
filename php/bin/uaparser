@@ -1,47 +1,43 @@
+#! /usr/bin/env php
 <?php
-
 /*!
- * ua-parser-php CLI v2.1.1
+ * UAParser CLI v2.2.0
  *
  * Copyright (c) 2012 Dave Olsen, http://dmolsen.com
  * Licensed under the MIT license
  *
- * spyc-0.5, for loading the YAML, is licensed under the MIT license.
- * Services_JSON, for loading the JSON in sub-PHP 5.2 installs, is licensed under the MIT license
- *
  * This is the CLI for ua-parser-php. The following commands are supported:
  *
- *   php uaparser-cli.php
+ *   php uaparser
  *       Provides the usage information.
  *
- *   php uaparser-cli.php [-p] [-j] "your user agent string"
+ *   php uaparser [-p] [-j] "your user agent string"
  *       Parses a user agent string and dumps the results as a list.
  *       Use the -j flag to print the result as JSON.
  *       Use the -p flag to pretty print the JSON result when using PHP 5.4+.
  *
- *   php uaparser-cli.php -g [-s] [-n]
+ *   php uaparser -g [-s] [-n]
  *       Fetches an updated YAML file for UAParser and overwrites the current JSON file.
  *       By default is verbose. Use -s to turn that feature off.
  *       By default creates a back-up. Use -n to turn that feature off.
  *
- *   php uaparser-cli.php -c [-s] [-n]
+ *   php uaparser -c [-s] [-n]
  *       Converts an existing regexes.yaml file to a regexes.json file.
  *       By default is verbose. Use -s to turn that feature off.
  *       By default creates a back-up. Use -n to turn that feature off.
  *
- *   php uaparser-cli.php -y
+ *   php uaparser -y
  *       Fetches an updated YAML file. If you need to add a new UA it's easier to edit
- *       the original YAML and then convert it. Warning: This method overwrites any 
+ *       the original YAML and then convert it. Warning: This method overwrites any
  *       existing regexes.yaml file.
  *
- *   php uaparser-cli.php -l /path/to/apache/logfile
+ *   php uaparser -l /path/to/apache/logfile
  *       Parses the supplied Apache log file to test UAParser.php. Saves the UA to a file
  *       when the UA or OS family aren't found or when the UA is listed as a generic
  *       smartphone or as a generic feature phone.
  *
  * Thanks to Marcus Bointon (https://github.com/Synchro) for getting this file started
  * and adding the initial JSON parser for a UA string.
- *
  */
 
 // define the base path for the file
@@ -74,7 +70,7 @@ function get($file,$silent,$nobackup,$basePath) {
             $data = json_encode($data);
             if (!$silent) { print "encoded as JSON...\n"; };
             if (file_exists($basePath."resources/regexes.json")) {
-                if (!$nobackup) { 
+                if (!$nobackup) {
                     if (!$silent) { print("backing up old JSON file...\n"); }
                     if (!copy($basePath."resources/regexes.json", $basePath."resources/regexes.".date("Ymdhis").".json")) {
                         if (!$silent) { print("back-up failed...\n"); }
@@ -96,71 +92,71 @@ function get($file,$silent,$nobackup,$basePath) {
  * Main logic for the CLI for the parser
  */
 if (php_sapi_name() == 'cli') {
-    
+
     // define the supported argument flags
     $args = getopt("gsncyl:pj:");
-    
+
     // process the arguments
     if (isset($args["g"])) {
-        
+
         /* Get regexes.yaml from the repo and convert it to JSON */
-        
+
         // set-up some standard vars
         $silent   = isset($args["s"]) ? true : false;
         $nobackup = isset($args["n"]) ? true : false;
-        
+
         // start chatty
         if (!$silent) {
             print "getting the YAML file from the repo...\n";
         }
-        
+
         // get the file
         get("https://raw.github.com/tobie/ua-parser/master/regexes.yaml",$silent,$nobackup,$basePath);
-        
+
     } else if (isset($args["c"])) {
-    
+
         /* Convert regexes.yaml to regexes.json */
-        
+
         // set-up some standard vars
         $silent   = isset($args["s"]) ? true : false;
         $nobackup = isset($args["n"]) ? true : false;
-        
+
         // start chatty
         if (!$silent) {
             print "getting the old YAML file...\n";
         }
-        
+
         // get the file
         get($basePath."resources/regexes.yaml",$silent,$nobackup,$basePath);
 
     } else if (isset($args["y"])) {
-	
+
 		/* Grabs regexes.yaml from the repo and saves it */
-		
+
 		if ($data = @file_get_contents("https://raw.github.com/tobie/ua-parser/master/regexes.yaml")) {
 	        file_put_contents($basePath."resources/regexes.yaml", $data);
 	        print("saved YAML file from the repo...\n");
 	    } else {
 	        print("failed to get the YAML file from the repo...\n");
 	    }
-        
+
     } else if (isset($args["l"]) && $args["l"]) {
-        
+
         /* Parse the supplied Apache log file */
-        
+
         // load the parser
         try {
             $parser = new UAParser;
         } catch (FileNotFound_Exception $e) {
             exit($e->getMessage());
         }
-        
+
         // set-up some standard vars
         $i       = 0;
         $output  = "";
         $saved   = array();
         $data    = @fopen($args["l"], "r");
-        
+
         if ($data) {
             $fp = fopen($basePath."log/results-".date("YmdHis").".txt", "w");
             while (($line = fgets($data)) !== false) {
@@ -202,21 +198,21 @@ if (php_sapi_name() == 'cli') {
             fclose($fp);
             fclose($data);
             print "\ncompleted the evaluation of the log file at ".$args["l"]."\n";
-        } else { 
+        } else {
             print "unable to read the file at the supplied path...\n";
         }
-        
+
     } else if (isset($args["j"]) && $args["j"]) {
-        
+
         /* Parse the supplied UA from the command line and kick it out as JSON */
-        
+
         // load the parser
         try {
             $parser = new UAParser;
         } catch (FileNotFound_Exception $e) {
             exit($e->getMessage());
         }
-        
+
         // parse and encode the results
         if (version_compare(PHP_VERSION, '5.4.0', '>=') && isset($args["p"])) {
             print json_encode($parser->parse($args["j"]), JSON_PRETTY_PRINT);
@@ -224,18 +220,18 @@ if (php_sapi_name() == 'cli') {
             print json_encode($parser->parse($args["j"]));
         }
         print PHP_EOL;
-        
+
     } else if (isset($argv[1]) && (($argv[1] != "-j") && ($argv[1] != "-p") && ($argv[1] != "-l") && ($argv[1] != "-s") && ($argv[1] != "-n"))) {
-        
+
         /* Parse the supplied UA from the command line and kick it out as JSON */
-        
+
         // load the parser
         try {
             $parser = new UAParser;
         } catch (FileNotFound_Exception $e) {
             exit($e->getMessage());
         }
-        
+
         // parse and print the results
         $result = $parser->parse($argv[1]);
         print "  ua-parser results for \"".$argv[1]."\"\n";
@@ -248,11 +244,11 @@ if (php_sapi_name() == 'cli') {
                 print "    ".$key.": ".$value."\n";
             }
         }
-        
+
     } else {
-        
+
         /* Print usage information */
-        
+
         print "\n";
         print "Usage:\n";
         print "\n";
@@ -281,11 +277,11 @@ if (php_sapi_name() == 'cli') {
         print "    when the UA or OS family aren't found or when the UA is listed as a generic\n";
         print "    smartphone or as a generic feature phone.\n";
         print "\n";
-        
+
     }
-    
+
 } else {
-    
+
     print "You must run this file from the command line.";
-    
+
 }

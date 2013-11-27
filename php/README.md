@@ -23,7 +23,9 @@ You can [test the PHP library](http://uaparser.dmolsen.com/) with your browser.
 Straightforward:
 
 ```php
-require("uaparser.php");
+require("vendor/autoload.php");
+
+use Tobie\UAParser;
 
 $ua = "Mozilla/5.0 (Macintosh; Intel Ma...";
 
@@ -56,7 +58,9 @@ print $result->uaOriginal;                // Mozilla/5.0 (Macintosh; Intel Ma...
 You can use your own `regexes.json` file if you've customized the official file. I *strongly* encourage you to push back any changes you may have so others can benefit. That said, to use your own do the following:
 
 ```php
-require("uaparser.php");
+require("vendor/autoload.php");
+
+use Tobie\UAParser;
 
 $parser = new UAParser("path/to/custom/regexes.json");
 ```
@@ -73,10 +77,10 @@ Provides simple usage information:
 
 ### Update the regexes.json File
 
-Fetches an updated YAML file for `ua-parser` and overwrites the current JSON file. You can use the following as part of a cron job that runs nightly. 
+Fetches an updated YAML file for `ua-parser` and overwrites the current JSON file. You can use the following as part of a cron job that runs nightly.
 
     php uaparser-cli.php -g [-s] [-n]
-        
+
 By default is verbose. Use `-s` to turn that feature off. By default creates a back-up. Use `-n` to turn that feature off.
 
 ### Convert an Existing regexes.yaml File to regexes.json
@@ -100,14 +104,14 @@ Fetches an updated YAML file. *Warning:* This method overwrites any existing `re
 Parses the supplied Apache log file to test UAParser.php. Saves the UA to a file when the UA or OS family aren't recognized or when the UA is listed as a generic smartphone or as a generic feature phone.
 
     php uaparser-cli.php -l "/path/to/apache/logfile"
-        
+
 
 ### Parse a Single User Agent String
 
 Parses a user agent string and dumps the results as a list.
 
     php uaparser-cli.php [-p] [-j] "your user agent string"
-           
+
 Use the `-j` flag to print the result as JSON. Use the `-p` flag to pretty print the JSON result when using PHP 5.4+.
 
 ## Credits ##
@@ -119,7 +123,7 @@ Also, many thanks to the following major contributors to the PHP library:
 * Bryan Shelton
 * Michael Bond
 * @rjd22
-* Timo Tijhof 
+* Timo Tijhof
 * Marcus Bointon
 * Ryan Parman
 * Pravin Dahal

@@ -2,6 +2,9 @@ THIS CHANGELOG IS AN ATTEMPT TO DOCUMENT CHANGES TO THIS PROJECT.
 SUPER MINOR REVISION NUMBERS WON'T SHOW UP IN GITHUB BUT IT'LL HELP
 ME ORGANIZE WHEN I MADE A SET OF FIXES
 
+UAP-2.2.0
+ - NEW: Port to PSR-0, PSR-1, and making the package more Composer-friendly.
+
 UAP-2.1.1
  - FIX: making sure patch minor is being populated correctly when showing a mismatch
 
@@ -12,7 +15,7 @@ UAP-2.1.0
  - FIX: refactored the regexes.yaml test suite
  - FIX: now check to see if allow_url_fopen is set to 'On' before trying to download the YAML file from the command line
  - THX: thanks to @pravindahal and @skyzyx for the pull requests
- 
+
 UAP-2.0.1
  - FIX: renamed uaParser, osParser, & deviceParser to uaParse, osParse, & deviceParse to address a bug with uaParser being recognized as the contruct function for the overall lib
  - FIX: updated the test lib so that device failures are properly formatted
@@ -47,7 +50,7 @@ UAP-1.5.0
  - FIX: remove .svn dirs in spyc (via @lopezdonaque)
  - FIX: notes that the PHP 5.2 fix really was for 5.1 (via @Synchro) (knew this, i was lazy)
  - FIX: lib now returns an object no matter what. now matches other ua-parser libs (via @Krinkle)
- - FIX: checks that $_SERVER attr is set before including it. should be better for command line use. 
+ - FIX: checks that $_SERVER attr is set before including it. should be better for command line use.
  - FIX: family attr now properly set in an edge case
  - FIX: if regexes.yaml picks up bad slashes the PHP lib will account for it (e.g. GoogleTV regex)
  - THX: thanks to @Krinkle and @Synchro for the numerous fixes
@@ -126,7 +129,7 @@ UAP-v0.3.1
  - FIX: swapped nil for null in parse()
  - FIX: smarter/saner defaults
  - FIX: now using isset() for family_replacement
- - THX: thanks to bryan shelton for these fixes 
+ - THX: thanks to bryan shelton for these fixes
 
 UAP-v0.3.0
  - ADD: can now supply a specific UA to be checked
@@ -155,9 +158,9 @@ UAP-v0.2.0
 
 UAP-v0.1.0
  - The following were changes to user_agents_regex.yaml:
- ---- expanded support for Symbia & Nokia Devices, 
- ---- cleaned up some slashies, 
- ---- added Mobile Safari as the family replacement for iOS devices, 
+ ---- expanded support for Symbia & Nokia Devices,
+ ---- cleaned up some slashies,
+ ---- added Mobile Safari as the family replacement for iOS devices,
  ---- better support for longer HTC device names
  ---- added feature phones to the device check
  ---- added generic smartphones to the device check

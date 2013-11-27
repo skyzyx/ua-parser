@@ -1,29 +1,16 @@
 <?php
-
 /*!
- * ua-parser-php Test Suite v2.1.1
+ * UAParser Test Suite v2.2.0
  *
  * Copyright (c) 2012 Dave Olsen, http://dmolsen.com
  * Licensed under the MIT license
  *
- * spyc-0.5, for loading the YAML, is licensed under the MIT license.
- *
- * This is the test suit for ua-parser-php to make sure it matches
+ * This is the test suit for UAParser to make sure it matches
  * the standards set forth for ua-parser libraries.
  *
  * IMPORTANT: This test suite skips the Chrome Frame tests because
  *            the PHP lib doesn't support that feature.
- *
  */
-
-// define the base path for the file
-$basePath = dirname(__FILE__).DIRECTORY_SEPARATOR;
-
-// include the YAML library
-require_once($basePath."lib/spyc-0.5/spyc.php");
-
-// include UAParser.php
-require_once($basePath."uaparser.php");
 
 // set-up the parser
 $parser = new UAParser;
@@ -66,12 +53,12 @@ function reportMismatch($obj,$tc,$tf) {
  */
 
 if (php_sapi_name() == "cli") {
-    
+
     if (!is_dir("../test_resources")) {
         print "ERROR: the full ua-parser project needs to be loaded for the test suite to work. sorry.\n";
         exit;
     }
-    
+
 	// test files and properties normally in them
 	$test_files = array("test_user_agent_parser","test_user_agent_parser_os","additional_os_tests","test_device","firefox_user_agent_strings");
 	$test_props = array("family", "major", "minor", "patch", "patch_minor");

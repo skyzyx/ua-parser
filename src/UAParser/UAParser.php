@@ -29,7 +29,7 @@ namespace UAParser;
 use Symfony\Component\Yaml\Yaml;
 use UAParser\Exception\FileNotFoundException;
 
-require_once dirname(__DIR__) . '/bootstrap.php';
+require_once dirname(dirname(__DIR__)) . '/bootstrap.php';
 
 class UAParser
 {

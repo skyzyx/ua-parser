@@ -54,7 +54,7 @@ class UAParser
 		}
 		else
 		{
-			throw new FileNotFoundException('regexes.yaml does not exist.');
+			throw new FileNotFoundException($regexesFile . ' does not exist.');
 		}
 	}
 
@@ -358,7 +358,7 @@ class UAParser
 	protected function log($data)
 	{
 		$jsonData = json_encode($data);
-		$fp = fopen(UAPARSER_ROOT . '/php/log/user_agents.log', 'a');
+		$fp = fopen(UAPARSER_ROOT . '/log/user_agents.log', 'a');
 		fwrite($fp, $jsonData . "\r\n");
 		fclose($fp);
 	}

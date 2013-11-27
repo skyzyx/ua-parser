@@ -26,6 +26,7 @@
 
 namespace Tobie;
 
+use Symfony\Component\Yaml\Yaml;
 use Tobie\Exception\FileNotFoundException;
 
 require_once dirname(__DIR__) . '/bootstrap.php';
@@ -40,7 +41,7 @@ class UAParser
 	 */
 	public function __construct($customRegexesFile = null)
 	{
-		$regexesFile = UAPARSER_ROOT . '/resources/regexes.json';
+		$regexesFile = UAPARSER_ROOT . '/regexes.yaml';
 
 		if ($customRegexesFile)
 		{
@@ -49,11 +50,11 @@ class UAParser
 
 		if (file_exists($regexesFile))
 		{
-			$this->regexes = json_decode(file_get_contents($regexesFile));
+			$this->regexes = Yaml::parse($regexesFile);
 		}
 		else
 		{
-			throw new FileNotFoundException('regexes.json does not exist.');
+			throw new FileNotFoundException('regexes.yaml does not exist.');
 		}
 	}
 
@@ -357,7 +358,7 @@ class UAParser
 	protected function log($data)
 	{
 		$jsonData = json_encode($data);
-		$fp = fopen(UAPARSER_ROOT . '/log/user_agents.log', 'a');
+		$fp = fopen(UAPARSER_ROOT . '/php/log/user_agents.log', 'a');
 		fwrite($fp, $jsonData . "\r\n");
 		fclose($fp);
 	}

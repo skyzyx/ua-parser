@@ -1,2 +1,2 @@
 <?php
-define('UAPARSER_ROOT', dirname(__DIR__));
+define('UAPARSER_ROOT', __DIR__);

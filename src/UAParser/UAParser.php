@@ -50,7 +50,7 @@ class UAParser
 
 		if (file_exists($regexesFile))
 		{
-			$this->regexes = (object) Yaml::parse($regexesFile);
+			$this->regexes = json_decode(json_encode(Yaml::parse($regexesFile)));
 		}
 		else
 		{

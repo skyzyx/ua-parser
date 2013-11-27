@@ -7,12 +7,12 @@
 		"useragent",
 		"ua"
 	],
-	"homepage": "https://github.com/tobie/ua-parser",
+	"homepage": "https://github.com/skyzyx/ua-parser",
 	"license": "MIT",
 	"authors": [
 		{
 			"name": "Community",
-			"homepage": "https://github.com/tobie/ua-parser/contributors"
+			"homepage": "https://github.com/skyzyx/ua-parser/contributors"
 		}
 	],
 	"require": {

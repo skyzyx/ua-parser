@@ -1,0 +1,27 @@
+{
+	"name": "tobie/ua-parser",
+	"type": "library",
+	"description": "A multi-language port of Browserscope's user agent parser.",
+	"keywords": [
+		"user agent",
+		"useragent",
+		"ua"
+	],
+	"homepage": "https://github.com/tobie/ua-parser",
+	"license": "MIT",
+	"authors": [
+		{
+			"name": "Community",
+			"homepage": "https://github.com/tobie/ua-parser/contributors"
+		}
+	],
+	"require": {
+		"php"         : ">=5.3.0",
+		"symfony/yaml": "*"
+	},
+	"autoload": {
+		"psr-0": {
+			"UAParser": "src/"
+		}
+	}
+}
